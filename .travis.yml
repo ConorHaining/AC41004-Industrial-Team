@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "8"
+install:
+  - npm i -g mocha mongodb
+  - npm i
+script:
+  - npm test
+notifications:
+  email: false
+  slack:
+    rooms:
+      - wrld3dteam4:hkbYQGdAp2nvQnMRwl7VJBbx
+    on_success: change
+    on_failure: always
+services:
+- mongodb
