@@ -9,11 +9,49 @@
   <div style="position: relative">
     <div id="map" style="height: 700px"></div>
     <script>
+      var highLight = false;
+      var highLightButton = "Highlight";
+      var locations = [ [37.795189, -122.402777] ];
       var map = L.Wrld.map("map", "ccefc31d6ccc1a6605409b0d2e6075bf", {
-        center: [37.7858, -122.401],
+        center: [37.795189, -122.402777],
         zoom: 16
       });
+      function onInitialStreamingComplete() {
+        if(!highLight){
+         buildingHighlight = L.Wrld.buildings.buildingHighlight(
+                L.Wrld.buildings.buildingHighlightOptions()
+                    .highlightBuildingAtLocation([37.795189, -122.402777])
+                    .color([255, 255, 0, 128])
+          
+                )
+                .addTo(map);
+                console.log(buildingHighlight);
+                console.log(buildingHighlight.getOptions().getSelectionLocation());
+                highLight = true;
+        } else {
+          buildingHighlight.remove();
+          highLight = false;
+        }
+      };
+      function highLightBuilding() {
+        if(!highLight)
+        onInitialStreamingComplete();
+      };
+      function addMarkerAboveBuilding(location){
+        intersection = map.buildings.findBuildingAtLatLng(location);
+        console.log(intersection);
+        if (intersection.found) {
+          L.marker(location, {
+            elevation: intersection.point.alt,
+            title: "title"
+          }).addTo(map);
+        }
+      };
     </script>
+  </div>
+  <div>
+      <button onclick="onInitialStreamingComplete()">Highlight Building</button>
+      <button onclick="addMarkerAboveBuilding(locations[0])">Highlight Buildin22g</button>
   </div>
   </body>
 </html>
