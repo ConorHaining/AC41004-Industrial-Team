@@ -1,5 +1,14 @@
 <!DOCTYPE HTML>
 <html>
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
  <head>
      
     <script>
@@ -95,5 +104,64 @@
    </script>
 
  </div>
+ <div class="container">
+        <canvas id="myChart"></canvas>
+      </div>
+    
+      <script>
+          console.log(blueRGB);
+        let myChart = document.getElementById('myChart').getContext('2d');
+    
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
+    
+        let massPopChart = new Chart(myChart, {
+          type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+          data:{
+            labels:['QMB GROUND FLOOR'],
+            datasets:[{
+              label:'Noise Level',
+              data:[
+              getNoiseLevel()
+              ],
+              //backgroundColor:'green',
+              backgroundColor:[
+                '(redRGB, 0, blueRGB, 64)'
+              ],
+              borderWidth:1,
+              borderColor:'#777',
+              hoverBorderWidth:3,
+              hoverBorderColor:'#000'
+            }]
+          },
+          options:{
+            title:{
+              display:true,
+              text:'Noise level in QMB',
+              fontSize:25
+            },
+            legend:{
+              display:true,
+              position:'right',
+              labels:{
+                fontColor:'#000'
+              }
+            },
+            layout:{
+              padding:{
+                left:50,
+                right:0,
+                bottom:0,
+                top:0
+              }
+            },
+            tooltips:{
+              enabled:true
+            }
+          }
+        });
+      </script>
  </body>
 </html>
