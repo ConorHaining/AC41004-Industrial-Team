@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+     
+    <script>
+        function getNoiseLevel() {
+            let d = new Date(); // for now
+            let utilizationArray = [1, 1, 1, 1, 1, 1,
+                                    1.1, 1.2, 1.4, 1.5, 1.7, 1.7,
+                                    1.4, 1.5, 1.5, 1.5, 1.5, 1.35,
+                                    1.15, 1.1, 1, 1, 1, 1];
+            let curHour = d.getHours();
+            if (curHour == 0)
+                curHour = 23;
+            else
+                --curHour;
+            
+            let ambientNoiseDB = 40;
+            let curUtilization = utilizationArray[curHour];
+            
+            let utilizationVariance = Math.random() / 10;
+            
+            let plusOrMinus = Math.random();
+            
+            let finalUtilization;
+            if (plusOrMinus > 0.5)
+                finalUtilization = curUtilization + utilizationVariance;
+            else
+                finalUtilization = curUtilization - utilizationVariance;
+            
+            let labNoiseDB = ambientNoiseDB * finalUtilization;
+            
+            if (curUtilization != 1)
+                return labNoiseDB;
+            else
+                return ambientNoiseDB;
+        }
+    </script>
+
+   <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
+ </head>
+
+ <body>
+ <div style="position: relative">
+    <div id="floorButtons">
+        <button onclick="toFloor()">Go to floor</button>
+        <button onclick="setEntityHighlights()">Highlight entities</button>
+        <button onclick="clearEntityHighlights()">Clear entities highlights</button>
+    </div>
+   <div id="map" style="height: 400px"></div>
+   <script>
+     var map = L.Wrld.map("map", "03013be32ed00b5339b756582b8d184a", {
+        center: [56.458629, -2.982733],
+        zoom: 18,
+        indoorsEnabled: true
+    });
+
+    function toFloor() {
+        map.indoors.enter("westport_house");
+    }
+    function setEntityHighlights() {
+        let roomDB = getNoiseLevel();
+        let highestDB = 75;
+        let baseDB = 40;
+
+        let dbDiff = highestDB - roomDB;
+        dbDiff = dbDiff / (highestDB - baseDB);
+
+        let redRGB = Math.floor(255 * (1 - dbDiff));
+        let blueRGB = Math.floor(255 * dbDiff);
+
+        if (redRGB > 255)
+            redRGB = 255;
+        if (redRGB < 0)
+            redRGB = 0;
+
+        if (blueRGB > 255)
+            blueRGB = 255;
+        if (blueRGB < 0)
+            blueRGB = 0;
+
+        map.indoors.setEntityHighlights("Meeting Room Small", [redRGB, 0, blueRGB, 64]);
+        map.indoors.setEntityHighlights("Meeting Room Large", [redRGB, 0, blueRGB, 64]);
+    }
+    function onIndoorMapEntered() {
+        map.indoors.setFloor(2);
+        map.setView([56.459984, -2.978238], 19.2);
+    }
+
+    function clearEntityHighlights() {
+        map.indoors.clearEntityHighlights();
+    }
+    map.indoors.on("indoormapenter", onIndoorMapEntered);
+   </script>
+
+ </div>
+ </body>
+</html>

@@ -10,4 +10,8 @@ router.get('/wrld3d', function(req, res, next){
   res.render('wrld3d');
 });
 
+router.get('/noiseGenerator', function(req, res, next) {
+  res.render('noiseGenerator');
+});
+
 module.exports = router;
