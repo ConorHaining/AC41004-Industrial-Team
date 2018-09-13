@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/noiseGenerator', function(req, res, next) {
+  res.render('noiseGenerator');
+});
+
 module.exports = router;
