@@ -1,4 +1,6 @@
 const data = require('./timetableData');
+const ejs = require('ejs');
+const path = require('path');
 
 /**
  * Taken from: https://stackoverflow.com/a/6117889
@@ -16,7 +18,7 @@ module.exports = {
         return data[room];
     },
 
-    getTimetableByRoomToday: function(room) {
+    getTimetableByRoomToday: function(room, cb) {
         const roomTimetable = data[room];
 
         const dayAsNumber = new Date().getDay();
@@ -32,7 +34,9 @@ module.exports = {
                                 return record;
                             });
 
-        return todaysTimetable;
+        this.createPopupHtml(room, todaysTimetable, (html) => {
+            cb(html);
+        });
     },
 
     formatTime: function(time) {
@@ -41,7 +45,15 @@ module.exports = {
         } else {
             return `${time}:00`;
         }
-        // return 'x';
+    },
+
+    createPopupHtml: function(room, timetable, cb) {
+        let data = {roomName: room, timetable: timetable};
+        let options = {async: false}
+
+        ejs.renderFile(path.join(__dirname, '../views/timetable.ejs'), data, options, (err, html) => {
+            cb(html)
+        });
     }
     
 }

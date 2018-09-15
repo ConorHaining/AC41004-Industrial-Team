@@ -12,7 +12,10 @@ router.get('/timetable/:room', (req, res) => {
   res.send(timetable.getTimetableByRoom(req.params['room']));
 });
 router.get('/timetable/:room/today', (req, res) => {
-  res.send(timetable.getTimetableByRoomToday(req.params['room']));
+  timetable.getTimetableByRoomToday(req.params['room'], (html) => {
+    res.send(html);
+  });
+
 });
 
 module.exports = router;

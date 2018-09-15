@@ -1,0 +1,24 @@
+<h1><%= roomName %></h1>
+<h3>Today's Timetable</h3>
+<table>
+    <thead>
+        <td>Module</td>
+        <td>Start</td>
+        <td>End</td>
+        <td>Staff</td>
+    </thead>
+    <tbody>
+    <% if(timetable.length === 0){ %>
+        <tr>
+            <td colspan="4">There are no classes today</td>
+        </tr>
+    <% } else { timetable.forEach((record) => { %>
+        <tr>
+            <td><%= record.title %></td>
+            <td><%= record.start %></td>
+            <td><%= record.end %></td>
+            <td><%= record.staff.toString() %></td>
+        </tr>
+    <% }); } %>
+    </tbody>
+</table>
