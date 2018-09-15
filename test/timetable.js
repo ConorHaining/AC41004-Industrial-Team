@@ -12,9 +12,9 @@ describe('Timetable Querying', () => {
 
     it('should return a timetable for a specified room for today only', () => {
 
-        let timetableData = timetable.getTimetableByRoomToday('GroundFloorLabs');
-
-        timetableData.should.be.a('array');
+        timetable.getTimetableByRoomToday('GroundFloorLabs', (html) => {
+            html.should.be.a('string');
+        });
         
     })
 });
