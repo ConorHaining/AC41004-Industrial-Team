@@ -56,6 +56,7 @@
         <button onclick="toFloor()">Go to floor</button>
         <button onclick="setEntityHighlights()">Highlight entities</button>
         <button onclick="clearEntityHighlights()">Clear entities highlights</button>
+        <div id="currentDB"></div>
     </div>
    <div id="map" style="height: 400px"></div>
    <script>
@@ -68,7 +69,8 @@
     function toFloor() {
         map.indoors.enter("westport_house");
     }
-    function setEntityHighlights() {
+
+	function highlightUpdate() {
         let roomDB = getNoiseLevel();
         let highestDB = 75;
         let baseDB = 40;
@@ -91,6 +93,30 @@
 
         map.indoors.setEntityHighlights("Meeting Room Small", [redRGB, 0, blueRGB, 64]);
         map.indoors.setEntityHighlights("Meeting Room Large", [redRGB, 0, blueRGB, 64]);
+		
+        document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
+        
+        let newChartDataObject = {
+              label:'Noise Level',
+              data:[
+              roomDB
+              ],
+              backgroundColor:[
+              'rgba('+parseFloat(redRGB).toPrecision(3)+', 0, '+parseFloat(blueRGB).toPrecision(3)+', 0.5)',
+              ],
+              borderWidth:1,
+              borderColor:'#777',
+              hoverBorderWidth:3,
+              hoverBorderColor:'#000'
+            };
+        
+        massPopChart.config.data.datasets.pop();
+        massPopChart.config.data.datasets.push(newChartDataObject);
+        massPopChart.update();
+    }
+
+    function setEntityHighlights() {
+        setInterval(highlightUpdate, 3000);
     }
     function onIndoorMapEntered() {
         map.indoors.setFloor(2);
@@ -124,7 +150,7 @@
             datasets:[{
               label:'Noise Level',
               data:[
-              getNoiseLevel()
+              0
               ],
               backgroundColor:[
               'rgba(255, 99, 132, 0.2)',

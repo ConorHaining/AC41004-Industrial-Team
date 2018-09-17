@@ -16,6 +16,10 @@ router.get('/noiseGenerator', function(req, res, next) {
   res.render('noiseGenerator');
 });
 
+router.get('/graphTest', function(req, res, next) {
+  res.render('graphTest');
+});
+
 router.get('/timetable/:room', (req, res) => {
   res.send(timetable.getTimetableByRoom(req.params['room']));
 });
