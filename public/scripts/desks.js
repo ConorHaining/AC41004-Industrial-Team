@@ -21,9 +21,6 @@ let deskPolling = window.setInterval(() => {
                 }
             });
 
-            console.log(onDesks);
-            console.log(offDesks);
-
             map.indoors.setEntityHighlights(onDesks, red);
             map.indoors.setEntityHighlights(offDesks, green);
 
