@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const timetable = require('../app/timetable');
+const desks = require('../app/desks');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,7 +16,10 @@ router.get('/timetable/:room/today', (req, res) => {
   timetable.getTimetableByRoomToday(req.params['room'], (html) => {
     res.send(html);
   });
+});
 
+router.get('/desks', (req, res) => {
+  res.send(desks.getCurrentDeskUsage());
 });
 
 module.exports = router;
