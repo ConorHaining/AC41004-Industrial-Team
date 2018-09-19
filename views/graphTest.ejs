@@ -1,132 +1,114 @@
-<!DOCTYPE HTML>
-<html lang="eng">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  </head>
-  
-  <body>
-  <div style="position: relative">
-    <div id="map" style="height: 700px"></div>
-    <script>
-      var highLight = false;
-      var highLightButton = "Highlight";
-      var locations = [ [37.795189, -122.402777] ];
-      var map = L.Wrld.map("map", "ccefc31d6ccc1a6605409b0d2e6075bf", {
-        center: [37.795189, -122.402777],
-        zoom: 16
-      });
-      function onInitialStreamingComplete() {
-        if(!highLight){
-         buildingHighlight = L.Wrld.buildings.buildingHighlight(
-                L.Wrld.buildings.buildingHighlightOptions()
-                    .highlightBuildingAtLocation([37.795189, -122.402777])
-                    .color([255, 255, 0, 128])
-          
-                )
-                .addTo(map);
-                console.log(buildingHighlight);
-                console.log(buildingHighlight.getOptions().getSelectionLocation());
-                highLight = true;
-        } else {
-          buildingHighlight.remove();
-          highLight = false;
+<!doctype html>
+<html>
+
+<head>
+    <title>Line Chart</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
-      };
-      function highLightBuilding() {
-        if(!highLight)
-        onInitialStreamingComplete();
-      };
-      function addMarkerAboveBuilding(location){
-        intersection = map.buildings.findBuildingAtLatLng(location);
-        console.log(intersection);
-        if (intersection.found) {
-          L.marker(location, {
-            elevation: intersection.point.alt,
-            title: "title"
-          }).addTo(map);
-        }
-      };
-    </script>
-  </div>
-  <div>
-      <button onclick="onInitialStreamingComplete()">Highlight Building</button>
-      <button onclick="addMarkerAboveBuilding(locations[0])">Highlight Buildin22g</button>
-  </div>
-      <div class="container">
-          <canvas id="myChart"></canvas>
-        </div>
-      
-        <script>
-          let myChart = document.getElementById('myChart').getContext('2d');
-      
-          // Global Options
-          Chart.defaults.global.defaultFontFamily = 'Lato';
-          Chart.defaults.global.defaultFontSize = 18;
-          Chart.defaults.global.defaultFontColor = '#777';
-      
-          let massPopChart = new Chart(myChart, {
-            type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-            data:{
-              labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford', 'Dundee'],
-              datasets:[{
-                label:'Population',
-                data:[
-                  617594,
-                  181045,
-                  153060,
-                  106519,
-                  105162,
-                  95072,
-                  55555
-                ],
-                //backgroundColor:'green',
-                backgroundColor:[
-                  'rgba(255, 99, 132, 0.6)',
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                  'rgba(75, 192, 192, 0.6)',
-                  'rgba(153, 102, 255, 0.6)',
-                  'rgba(255, 159, 64, 0.6)',
-                  'rgba(255, 99, 132, 0.6)'
-                ],
-                borderWidth:1,
-                borderColor:'#777',
-                hoverBorderWidth:3,
-                hoverBorderColor:'#000'
-              }]
+    </style>
+</head>
+
+<body>
+<div style="width:75%;">
+    <canvas id="canvas"></canvas>
+</div>
+<script>
+    var timeFormat = 'DD/MM/YYYY';
+
+    var config = {
+        type:    'line',
+        data:    {
+            datasets: [
+                {
+                    label: "US Dates",
+                    data: [{
+                        x: "04/01/2014", y: 175
+                    }, {
+                        x: "10/01/2014", y: 175
+                    }, {
+                        x: "04/01/2015", y: 178
+                    }, {
+                        x: "10/01/2015", y: 178
+                    },
+					{
+						x: "01/10/2015", y: 180
+					},
+					],
+                    fill: false,
+                    borderColor: 'red'
+                },
+                {
+                    label: "UK Dates",
+                    data:  [{
+                        x: "01/04/2014", y: 175
+                    }, {
+                        x: "01/10/2014", y: 175
+                    }, {
+                        x: "01/04/2015", y: 178
+                    }, {
+                        x: "01/10/2015", y: 178
+                    }],
+                    fill:  false,
+                    borderColor: 'blue'
+                },
+				{
+                    label: "LIETUVA Dates",
+                    data:  [{
+                        x: "01/04/2014", y: 150
+                    }, {
+                        x: "01/10/2014", y: 155
+                    }, {
+                        x: "01/04/2015", y: 200
+                    }, {
+                        x: "01/10/2015", y: 211
+                    }],
+                    fill:  false,
+                    borderColor: 'green'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "Chart.js Time Scale"
             },
-            options:{
-              title:{
-                display:true,
-                text:'Largest Cities In Massachusetts',
-                fontSize:25
-              },
-              legend:{
-                display:true,
-                position:'right',
-                labels:{
-                  fontColor:'#000'
-                }
-              },
-              layout:{
-                padding:{
-                  left:50,
-                  right:0,
-                  bottom:0,
-                  top:0
-                }
-              },
-              tooltips:{
-                enabled:true
-              }
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        tooltipFormat: 'll'
+                    },
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'value'
+                    }
+                }]
             }
-          });
-        </script>
-  </body>
+        }
+    };
+
+    window.onload = function () {
+        var ctx       = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
+
+</script>
+
+</body>
+
 </html>

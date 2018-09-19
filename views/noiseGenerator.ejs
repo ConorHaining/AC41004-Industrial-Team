@@ -146,46 +146,51 @@
         let massPopChart = new Chart(myChart, {
           type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
           data:{
-            labels:['QMB GROUND FLOOR'],
             datasets:[{
-              label:'Noise Level',
-              data:[
-              0
-              ],
-              backgroundColor:[
-              'rgba(255, 99, 132, 0.2)',
-              ],
-              borderWidth:1,
-              borderColor:'#777',
-              hoverBorderWidth:3,
-              hoverBorderColor:'#000'
-            }]
+                    label: "US Dates",
+                    data: [{
+                        x: "04/01/2014", y: 175
+                    }, {
+                        x: "10/01/2014", y: 175
+                    }, {
+                        x: "04/01/2015", y: 178
+                    }, {
+                        x: "10/01/2015", y: 178
+                    },
+					{
+						x: "01/10/2015", y: 180
+					},
+					],
+                    fill: false,
+                    borderColor: 'red'
+                }]
           },
-          options:{
-            title:{
-              display:true,
-              text:'Noise level in QMB',
-              fontSize:25
+          options: {
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "Chart.js Time Scale"
             },
-            legend:{
-              display:true,
-              position:'right',
-              labels:{
-                fontColor:'#000'
-              }
-            },
-            layout:{
-              padding:{
-                left:50,
-                right:0,
-                bottom:0,
-                top:0
-              }
-            },
-            tooltips:{
-              enabled:true
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        tooltipFormat: 'll'
+                    },
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'value'
+                    }
+                }]
             }
-          }
+        }
         });
       </script>
  </body>
