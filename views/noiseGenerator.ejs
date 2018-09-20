@@ -6,6 +6,7 @@
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
           <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
           <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
@@ -94,25 +95,25 @@
         map.indoors.setEntityHighlights("Meeting Room Small", [redRGB, 0, blueRGB, 64]);
         map.indoors.setEntityHighlights("Meeting Room Large", [redRGB, 0, blueRGB, 64]);
 		
-        document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
+        // document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
         
-        let newChartDataObject = {
-              label:'Noise Level',
-              data:[
-              roomDB
-              ],
-              backgroundColor:[
-              'rgba('+parseFloat(redRGB).toPrecision(3)+', 0, '+parseFloat(blueRGB).toPrecision(3)+', 0.5)',
-              ],
-              borderWidth:1,
-              borderColor:'#777',
-              hoverBorderWidth:3,
-              hoverBorderColor:'#000'
-            };
+        // let newChartDataObject = {
+        //       label:'Noise Level',
+        //       data:[
+        //       roomDB
+        //       ],
+        //       backgroundColor:[
+        //       'rgba('+parseFloat(redRGB).toPrecision(3)+', 0, '+parseFloat(blueRGB).toPrecision(3)+', 0.5)',
+        //       ],
+        //       borderWidth:1,
+        //       borderColor:'#777',
+        //       hoverBorderWidth:3,
+        //       hoverBorderColor:'#000'
+        //     };
         
-        massPopChart.config.data.datasets.pop();
-        massPopChart.config.data.datasets.push(newChartDataObject);
-        massPopChart.update();
+        // massPopChart.config.data.datasets.pop();
+        // massPopChart.config.data.datasets.push(newChartDataObject);
+        // massPopChart.update();
     }
 
     function setEntityHighlights() {
@@ -135,7 +136,7 @@
       </div>
     
       <script>
-
+        var timeFormat = 'DD/MM/YYYY';
         let myChart = document.getElementById('myChart').getContext('2d');
     
         // Global Options
@@ -144,25 +145,18 @@
         Chart.defaults.global.defaultFontColor = '#777';
     
         let massPopChart = new Chart(myChart, {
-          type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+          type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
           data:{
             datasets:[{
                     label: "US Dates",
                     data: [{
-                        x: "04/01/2014", y: 175
+                        x: "04/01/2014", y: 199
                     }, {
-                        x: "10/01/2014", y: 175
-                    }, {
-                        x: "04/01/2015", y: 178
-                    }, {
-                        x: "10/01/2015", y: 178
+                        x: "10/01/2015", y: 200
                     },
-					{
-						x: "01/10/2015", y: 180
-					},
 					],
                     fill: false,
-                    borderColor: 'red'
+                    borderColor: 'green'
                 }]
           },
           options: {
