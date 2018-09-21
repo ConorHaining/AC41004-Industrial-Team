@@ -56,12 +56,13 @@
     <div id="floorButtons">
         <button onclick="toFloor()">Go to floor</button>
         <button onclick="setEntityHighlights()">Highlight entities</button>
-        <button onclick="clearEntityHighlights()">Clear entities highlights</button>
         <div id="currentDB"></div>
     </div>
    <div id="map" style="height: 400px"></div>
    <script>
-     var map = L.Wrld.map("map", "03013be32ed00b5339b756582b8d184a", {
+    let intervalVar;
+    let noiseHighlighted = false;
+    var map = L.Wrld.map("map", "03013be32ed00b5339b756582b8d184a", {
         center: [56.45844771563734, -2.982573509216309],
         zoom: 18,
         indoorsEnabled: true,
@@ -125,8 +126,17 @@
     }
 
     function setEntityHighlights() {
-        highlightLabs();
-        setInterval(highlightLabs, 3000);
+        if ( noiseHighlighted == false )
+        {
+            noiseHighlighted = true;
+            highlightLabs();
+            intervalVar = setInterval(highlightLabs, 3000);
+        }
+        else
+        {
+            noiseHighlighted = false;
+            clearEntityHighlights();
+        }
     }
     function onIndoorMapEntered() {
         //map.indoors.setFloor(2);
@@ -135,6 +145,8 @@
 
     function clearEntityHighlights() {
         map.indoors.clearEntityHighlights();
+        if(intervalVar)
+            clearInterval(intervalVar);
     }
     //map.indoors.on("indoormapenter", onIndoorMapEntered);
    </script>
