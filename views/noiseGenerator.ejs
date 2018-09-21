@@ -95,25 +95,19 @@
         map.indoors.setEntityHighlights("Meeting Room Small", [redRGB, 0, blueRGB, 64]);
         map.indoors.setEntityHighlights("Meeting Room Large", [redRGB, 0, blueRGB, 64]);
 		
-        // document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
+         document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
         
-        // let newChartDataObject = {
-        //       label:'Noise Level',
-        //       data:[
-        //       roomDB
-        //       ],
-        //       backgroundColor:[
-        //       'rgba('+parseFloat(redRGB).toPrecision(3)+', 0, '+parseFloat(blueRGB).toPrecision(3)+', 0.5)',
-        //       ],
-        //       borderWidth:1,
-        //       borderColor:'#777',
-        //       hoverBorderWidth:3,
-        //       hoverBorderColor:'#000'
-        //     };
-        
-        // massPopChart.config.data.datasets.pop();
-        // massPopChart.config.data.datasets.push(newChartDataObject);
-        // massPopChart.update();
+                let newChartDataObject = {
+                    data:[{
+                        x: "04/01/2018", y: roomDB
+                    },
+                    ],
+                   };
+                massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
+                massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
+                massPopChart.update();
+                
+        console.log(massPopChart.config.data.datasets[0]);
     }
 
     function setEntityHighlights() {
@@ -139,25 +133,16 @@
         var timeFormat = 'DD/MM/YYYY';
         let myChart = document.getElementById('myChart').getContext('2d');
     
-        // Global Options
-        Chart.defaults.global.defaultFontFamily = 'Lato';
-        Chart.defaults.global.defaultFontSize = 18;
-        Chart.defaults.global.defaultFontColor = '#777';
-    
         let massPopChart = new Chart(myChart, {
           type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
           data:{
             datasets:[{
-                    label: "US Dates",
-                    data: [{
-                        x: "04/01/2014", y: 199
-                    }, {
-                        x: "10/01/2015", y: 200
-                    },
-					],
+                    label:'Ronberter Level',
+                    data:[],
                     fill: false,
-                    borderColor: 'green'
-                }]
+                    borderColor: 'red',
+                    }
+                    ]
           },
           options: {
             responsive: true,
@@ -181,7 +166,11 @@
                     scaleLabel: {
                         display:     true,
                         labelString: 'value'
-                    }
+                    },
+                        ticks: {
+                            min: 40,
+                            max: 80
+                        }
                 }]
             }
         }
