@@ -28,7 +28,7 @@
             let ambientNoiseDB = 40;
             let curUtilization = utilizationArray[curHour];
             
-            let utilizationVariance = Math.random() / 10;
+            let utilizationVariance = Math.random() / 5;
             
             let plusOrMinus = Math.random();
             
@@ -62,16 +62,17 @@
    <div id="map" style="height: 400px"></div>
    <script>
      var map = L.Wrld.map("map", "03013be32ed00b5339b756582b8d184a", {
-        center: [56.458629, -2.982733],
+        center: [56.45844771563734, -2.982573509216309],
         zoom: 18,
-        indoorsEnabled: true
+        indoorsEnabled: true,
+        coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-7e76aeae-2f60-471d-baac-cf0d75dc91cf_2018_09_21_10_34_42/webgl_manifest.bin.gz"
     });
 
     function toFloor() {
-        map.indoors.enter("westport_house");
+        map.indoors.enter("QMB");
     }
 
-	function highlightUpdate() {
+	function highlightUpdate(labid) {
         let roomDB = getNoiseLevel();
         let highestDB = 75;
         let baseDB = 40;
@@ -91,10 +92,9 @@
             blueRGB = 255;
         if (blueRGB < 0)
             blueRGB = 0;
-
-        map.indoors.setEntityHighlights("Meeting Room Small", [redRGB, 0, blueRGB, 64]);
-        map.indoors.setEntityHighlights("Meeting Room Large", [redRGB, 0, blueRGB, 64]);
-		
+        
+        map.indoors.setEntityHighlights(labid, [redRGB, 0, blueRGB, 64]);
+        
         // document.getElementById("currentDB").innerHTML = parseFloat(roomDB).toPrecision(3);
         
         // let newChartDataObject = {
@@ -116,18 +116,27 @@
         // massPopChart.update();
     }
 
+    function highlightLabs()
+    {
+        highlightUpdate("3003");
+        highlightUpdate("3002");
+        highlightUpdate("3001");
+        highlightUpdate("3000");
+    }
+
     function setEntityHighlights() {
-        setInterval(highlightUpdate, 3000);
+        highlightLabs();
+        setInterval(highlightLabs, 3000);
     }
     function onIndoorMapEntered() {
-        map.indoors.setFloor(2);
-        map.setView([56.459984, -2.978238], 19.2);
+        //map.indoors.setFloor(2);
+        //map.setView([56.459984, -2.978238], 19.2);
     }
 
     function clearEntityHighlights() {
         map.indoors.clearEntityHighlights();
     }
-    map.indoors.on("indoormapenter", onIndoorMapEntered);
+    //map.indoors.on("indoormapenter", onIndoorMapEntered);
    </script>
 
  </div>
