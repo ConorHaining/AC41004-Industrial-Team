@@ -1,30 +1,23 @@
 const locations = [
     {
-        "Title": "WRLD Office",
+        "Title": "Lab 0",
         "ID": "GroundFloorLabs",
-        "LatLong": [56.459970, -2.978182],
-        "IndoorMapId": "westport_house",
+        "LatLong": [56.458496, -2.982746],
+        "IndoorMapId": "EIM-7e76aeae-2f60-471d-baac-cf0d75dc91cf",
         "IndoorMapFloor": 2,
     },
     {
-        "Title": "Office Space D",
+        "Title": "Lab 1",
         "ID": "GroundFloorLabs",
-        "LatLong": [56.459957, -2.978466],
-        "IndoorMapId": "westport_house",
+        "LatLong": [56.458620, -2.982880],
+        "IndoorMapId": "EIM-7e76aeae-2f60-471d-baac-cf0d75dc91cf",
         "IndoorMapFloor": 2,
     },
     {
-        "Title": "Office Space C",
+        "Title": "Lab 2",
         "ID": "GroundFloorLabs",
-        "LatLong": [56.460229, -2.978405],
-        "IndoorMapId": "westport_house",
-        "IndoorMapFloor": 2,
-    },
-    {
-        "Title": "Office Space A",
-        "ID": "GroundFloorLabs",
-        "LatLong": [56.460242, -2.978094],
-        "IndoorMapId": "westport_house",
+        "LatLong": [56.458737, -2.982999],
+        "IndoorMapId": "EIM-7e76aeae-2f60-471d-baac-cf0d75dc91cf",
         "IndoorMapFloor": 2,
     }
 ]
