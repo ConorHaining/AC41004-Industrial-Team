@@ -28,4 +28,4 @@ function deskHighlighting() {
 }
 
 let deskPolling = window.setInterval(deskHighlighting, 5000);
-map.indoors.on('indoormapenter', deskHighlighting);
+deskHighlighting();
