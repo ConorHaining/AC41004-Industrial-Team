@@ -23,8 +23,14 @@ const locations = [
 ]
 let timetable;
 
+var timetableIcon = L.icon({
+    iconUrl: 'images/calendar.png',
+    iconSize: [32, 32]
+});
+
 function placeMarkers(event) {
     const buildingName = event.indoorMap.getIndoorMapId();
+    console.log(buildingName);
 
     locations.forEach((location) => {
 
@@ -36,7 +42,8 @@ function placeMarkers(event) {
                 L.marker(location.LatLong, {        
                     title: location.Title,
                     indoorMapId: location.IndoorMapId,
-                    indoorMapFloorId: location.IndoorMapFloor
+                    indoorMapFloorId: location.IndoorMapFloor,
+                    icon: timetableIcon
                   }).addTo(map)
                     .bindPopup(data,
                         {
