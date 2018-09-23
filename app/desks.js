@@ -1,15 +1,34 @@
+const elasticsearch = require('elasticsearch');
 
 module.exports = {
-    getCurrentDeskUsage: () => {
-        
-        const desks = ['0001', '0002', '0003', '0004', '0005', '0006', '0007', '0008', '0009', '0010', '0011', '0012', '0013', '0014', '0015', '0016', '0017', '0018', '0019', '0020', '0021', '0022', '0023', '0024', '0025', '0026', '0027', '0028', '0029', '0030', '0031', '0032', '0033', '0034', '0035', '0036', '0037', '0038', '0039'];
+   getCurrentDeskUsage: (cb) => {
 
-        let occupancy = {};
+       const client = new elasticsearch.Client({
+           hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
+       });
 
-        desks.forEach((desk) => {
-            let r = Math.random();
-            if (r < 0.5) { occupancy[desk] = true; } else { occupancy[desk] = false; }
-        });
-        return occupancy;
-    }
+       let occupancy = {};
+       
+       client.search({
+           index: 'pc_logs',
+           body: {
+               size: 100,
+               query: {
+                   range : {
+                       timestamp: {
+                           gte : "now-5s",
+                           lt :  "now"
+                       }
+                   }
+               }
+           }
+         }, (err, response) => {
+             response.hits.hits.forEach(element => {
+                 occupancy[element._source.pc_name] = element._source.available;
+             });
+
+             cb(occupancy);
+         });
+       
+   }
 }

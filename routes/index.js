@@ -19,7 +19,9 @@ router.get('/timetable/:room/today', (req, res) => {
 });
 
 router.get('/desks', (req, res) => {
-  res.send(desks.getCurrentDeskUsage());
+  desks.getCurrentDeskUsage((occupancy) => {
+    res.send(occupancy);
+  });
 });
 
 module.exports = router;
