@@ -60,8 +60,6 @@ function highlightUpdate(labid) {
     massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
     massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
     massPopChart.update();
-            
-    console.log(massPopChart.config.data.datasets[0]);
 }
 
 function highlightLabs()

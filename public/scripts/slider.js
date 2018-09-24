@@ -1,6 +1,6 @@
 var slider = document.getElementById("hourRange");
 let tempDate = new Date();
-slider.value = tempDate.getHours();
+slider.value = 24;
 displaySliderTime(tempDate);
 //output.innerHTML = slider.value;
 
@@ -9,16 +9,39 @@ slider.oninput = function() {
     //output.innerHTML = this.value;
     let curDate = new Date();
     displaySliderTime(curDate);
-    deskHighlightingHour(curDate.getHours());
+    if( this.value == 24 )
+    {
+        currentDeskUpdate();
+    }
+    else
+    {
+        map.indoors.clearEntityHighlights();
+        deskHighlightingHour(getHourFromSliderValue(this.value, 
+            curDate.getHours()));
+    }
+}
+
+function getHourFromSliderValue(value, curHour)
+{
+    let tempHour = 24 - value;
+    tempHour = curHour - tempHour;
+    if (tempHour < 0)
+        tempHour = 24 + tempHour;
+    else if (tempHour == 0)
+        tempHour = 24;
+    return tempHour;
 }
 
 function displaySliderTime(curDate) {
     
     var popup = document.getElementById("myPopup");
-    if(curDate.getHours() == slider.value)
+    if( slider.value == 24 )
         popup.innerHTML = "Time: Current";
     else
-        popup.innerHTML = "Time:" + slider.value;
+    {
+        popup.innerHTML = "Time:" + 
+            getHourFromSliderValue(slider.value, curDate.getHours());
+    }
     /*if(!popup.classList.contains("show"))
     {
         popup.classList.toggle("show");
@@ -27,18 +50,15 @@ function displaySliderTime(curDate) {
 
 function updateSliderTime()
 {
+    var popup = document.getElementById("myPopup");
     let curDate = new Date();
-    if ( popup.innerHTML == "Time: Current" )
-    {
-        if ( slider.value != curDate.getHours() )
-        {
-            slider.value = curDate.getHours();
-            displaySliderTime(curDate);
-        }
-    }
-    else
+    let valueToHours = getHourFromSliderValue(slider.value, curDate.getHours());
+    //In progress
+    if ( popup.innerHTML != "Time: Current" )
     {
         if ( slider.value == curDate.getHours() )
             displaySliderTime(curDate);
     }
 }
+
+//let sliderUpdate = window.setInterval(updateSliderTime, 5000);

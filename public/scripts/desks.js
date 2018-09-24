@@ -20,17 +20,18 @@ function deskHighlighting() {
                 }
             });
     
-            map.indoors.setEntityHighlights(onDesks, red);
-            map.indoors.setEntityHighlights(offDesks, green);
+            map.indoors.setEntityHighlights(onDesks, green);
+            map.indoors.setEntityHighlights(offDesks, red);
     
         } 
     });
 }
 
 function deskHighlightingHour(hour) {
-    clearInterval(deskPolling);
+    if(deskPolling)
+        clearInterval(deskPolling);
     $.get({
-        url: '/desks/:' + hour.toString(),
+        url: '/desks/' + hour.toString(),
         dataType: 'json',
         success: (desks) => {
             let deskIds = Object.keys(desks);
@@ -47,11 +48,19 @@ function deskHighlightingHour(hour) {
                 }
             });
     
-            map.indoors.setEntityHighlights(onDesks, red);
-            map.indoors.setEntityHighlights(offDesks, green);
+            map.indoors.setEntityHighlights(onDesks, green);
+            map.indoors.setEntityHighlights(offDesks, red);
     
         } 
     });
+}
+
+function currentDeskUpdate()
+{
+    if(deskPolling)
+        clearInterval(deskPolling);
+    deskPolling = window.setInterval(deskHighlighting, 5000);
+    deskHighlighting();
 }
 
 let deskPolling = window.setInterval(deskHighlighting, 5000);
