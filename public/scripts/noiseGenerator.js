@@ -1,5 +1,6 @@
 let intervalVar;
 let noiseHighlighted = false;
+
 function getNoiseLevel() {
     let d = new Date(); // for now
     let utilizationArray = [1, 1, 1, 1, 1, 1,

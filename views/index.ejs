@@ -19,6 +19,12 @@
       <h1>Is the Queen Mother Building Busy?</h1>
       <button onclick="setEntityHighlights()">Activate noise</button>
       <button onclick="">Activate tables</button>
+      <div class="slide">
+        <div class="popup">
+          <span class="popuptext show" id="myPopup"></span>
+        </div>
+        <input type="range" min="1" max="24" value="8" class="slider" id="hourRange">
+      </div>
     </header>
     <section>
       <div id="widget-container" class="wrld-widget-container"></div>
@@ -29,6 +35,7 @@
     <script src="/scripts/timetable.js"></script>
     <script src="/scripts/desks.js"></script>
     <script src="/scripts/noiseGenerator.js"></script>
+    <script src="/scripts/slider.js"></script>
     <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
         <img src="/images/NoiseGradient.png">
     </div>
