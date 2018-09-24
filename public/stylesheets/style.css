@@ -1,4 +1,24 @@
 body{
   margin: 0;
   padding: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header{
+  background: #4365e2;
+  color: white;
+  padding: 5px 10px;
+}
+header img,
+header h1{
+  display: inline;
+  vertical-align: middle;
+}
+header h1 {
+  margin-left: 20px;
+}
+
+#widget-container{
+  top: 100px;
 }
