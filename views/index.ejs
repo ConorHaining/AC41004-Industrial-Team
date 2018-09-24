@@ -10,6 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script src="https://cdn-webgl.wrld3d.com/wrldjs/addons/indoor_control/latest/indoor_control.js"></script>
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
@@ -19,6 +21,7 @@
       <h1>Is the Queen Mother Building Busy?</h1>
       <button onclick="setEntityHighlights()">Activate noise</button>
       <button onclick="">Activate tables</button>
+      <button onclick="displayChart()">Display graph</button>
       <div class="slide">
         <div class="popup">
           <span class="popuptext show" id="myPopup"></span>
@@ -29,6 +32,12 @@
     <section>
       <div id="widget-container" class="wrld-widget-container"></div>
       <div id="map" style="min-height: 800px;"></div>
+      <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
+        <img src="/images/NoiseGradient.png">
+    </div>
+      <div id="graphButton" style="position:absolute; left: 96.5%; top: 12%">
+        <i class="fas fa-chart-line fa-3x"></i>
+      </div>
     </section>
     <div><canvas id="myChart"></canvas></div>
     <script src="/scripts/map.js"></script>
@@ -36,8 +45,6 @@
     <script src="/scripts/desks.js"></script>
     <script src="/scripts/noiseGenerator.js"></script>
     <script src="/scripts/slider.js"></script>
-    <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
-        <img src="/images/NoiseGradient.png">
-    </div>
+    <script src="/scripts/graphDisplay.js"></script>
   </body>
 </html>

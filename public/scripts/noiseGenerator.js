@@ -57,10 +57,12 @@ function highlightUpdate(labid) {
     
     map.indoors.setEntityHighlights(labid, [redRGB, 0, blueRGB, 64]);
     
-    massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
-    massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
-    massPopChart.update();
-            
+    if(massPopChart != undefined) {
+        massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
+        massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
+        massPopChart.update();
+    }
+    
     console.log(massPopChart.config.data.datasets[0]);
 }
 
@@ -95,46 +97,48 @@ function clearEntityHighlights() {
 }
 var timeFormat = 'DD/MM/YYYY';
 let myChart = document.getElementById('myChart').getContext('2d');
-
-let massPopChart = new Chart(myChart, {
-    type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-    data:{
-    datasets:[{
-            label:'Ronberter Level',
-            data:[],
-            fill: false,
-            borderColor: 'red',
-            }
-            ]
-    },
-    options: {
-    responsive: true,
-    title:      {
-        display: true,
-        text:    "Chart.js Time Scale"
-    },
-    scales:     {
-        xAxes: [{
-            type:       "time",
-            time:       {
-                format: timeFormat,
-                tooltipFormat: 'll'
-            },
-            scaleLabel: {
-                display:     true,
-                labelString: 'Date'
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display:     true,
-                labelString: 'value'
-            },
-                ticks: {
-                    min: 40,
-                    max: 80
+var massPopChart;
+function displayChart(){
+    massPopChart = new Chart(myChart, {
+        type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        data:{
+        datasets:[{
+                label:'Ronberter Level',
+                data:[],
+                fill: false,
+                borderColor: 'red',
                 }
-        }]
+                ]
+        },
+        options: {
+        responsive: true,
+        title:      {
+            display: true,
+            text:    "Chart.js Time Scale"
+        },
+        scales:     {
+            xAxes: [{
+                type:       "time",
+                time:       {
+                    format: timeFormat,
+                    tooltipFormat: 'll'
+                },
+                scaleLabel: {
+                    display:     true,
+                    labelString: 'Date'
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display:     true,
+                    labelString: 'value'
+                },
+                    ticks: {
+                        min: 40,
+                        max: 80
+                    }
+            }]
+        }
     }
+    });
 }
-});
