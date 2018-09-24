@@ -25,4 +25,10 @@ router.get('/desks', (req, res) => {
   });
 });
 
+router.get('/desks/:hour', (req, res) => {
+  desks.getHistoricalDeskUsage(req.params['hour'], (occupancy) => {
+    res.send(occupancy);
+  });
+});
+
 module.exports = router;
