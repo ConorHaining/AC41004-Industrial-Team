@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Is the QMB Busy?</title>
     <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
 
@@ -13,10 +13,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div id="widget-container" class="wrld-widget-container"></div>
-    <div id="map" style="height: 400px"></div>
+    <header>
+      <img src="/images/SoC.png" alt="">
+      <h1>Is the Queen Mother Building Busy?</h1>
+    </header>
     <section>
-      <h1>Queen Mother Building</h1>
+      <div id="widget-container" class="wrld-widget-container"></div>
+      <div id="map" style="min-height: 800px;"></div>
     </section>
     <script src="/scripts/map.js"></script>
     <script src="/scripts/timetable.js"></script>
