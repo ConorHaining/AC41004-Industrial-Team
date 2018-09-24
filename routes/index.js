@@ -6,12 +6,13 @@ const desks = require('../app/desks');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express'});
 });
 
 router.get('/timetable/:room', (req, res) => {
   res.send(timetable.getTimetableByRoom(req.params['room']));
 });
+
 router.get('/timetable/:room/today', (req, res) => {
   timetable.getTimetableByRoomToday(req.params['room'], (html) => {
     res.send(html);
