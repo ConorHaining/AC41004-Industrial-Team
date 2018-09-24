@@ -23,4 +23,26 @@ describe('Desk Availability', () => {
 
 
     });
+
+    it('should return an object of desks being used historically', () => {
+        
+        desks.getHistoricalDeskUsage(10, (deskAvailability) => {
+            deskAvailability.should.be.an('object');
+        });
+
+
+    });
+
+    it('should contain either true/false as values historically', () => {
+
+        desks.getHistoricalDeskUsage(10, (deskAvailability) => {
+            let values = Object.values(deskAvailability);
+    
+            values.forEach(element => {
+                element.should.be.a('boolean');
+            });
+        });
+
+
+    });
 });
