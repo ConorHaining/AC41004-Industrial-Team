@@ -61,7 +61,6 @@ header h1 {
   cursor: pointer;
 }
 
-/* Popup container */
 .popup {
   position: relative;
   display: inline-block;
