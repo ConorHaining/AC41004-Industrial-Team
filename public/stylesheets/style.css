@@ -10,6 +10,12 @@ header{
   color: white;
   padding: 5px 10px;
 }
+
+.fa-chart-line:before {
+  content: "\f201";
+  color: white;
+}
+
 header img,
 header h1{
   display: inline;
