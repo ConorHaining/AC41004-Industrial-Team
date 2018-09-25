@@ -1,13 +1,12 @@
 var e = document.getElementById("graphButton");
+var c = document.getElementById("myChart");
 
 e.onmouseover = function () {
-    displayChart();
+    c.style.visibility = "visible";
 }
 
 e.onmouseout = function () {
-    console.log("mouse out");
+     c.style.visibility = "hidden";
 }
 
-function mouseOver() {
-  alert("testing");
-}
+

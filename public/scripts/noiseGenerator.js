@@ -1,5 +1,6 @@
 let intervalVar;
 let noiseHighlighted = false;
+let graphDisplay = false;
 
 function getNoiseLevel() {
     let d = new Date(); // for now
@@ -70,6 +71,10 @@ function highlightLabs()
     highlightUpdate("3002");
     highlightUpdate("3001");
     highlightUpdate("3000");
+    if(!graphDisplay){
+        displayChart();
+        graphDisplay = true;
+    }
 }
 
 function setEntityHighlights() {
@@ -97,6 +102,7 @@ var timeFormat = 'DD/MM/YYYY';
 let myChart = document.getElementById('myChart').getContext('2d');
 var massPopChart;
 function displayChart(){
+    document.getElementById('myChart').style.visibility = "hidden";
     massPopChart = new Chart(myChart, {
         type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
         data:{
