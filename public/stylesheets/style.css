@@ -100,6 +100,15 @@ header h1 {
   border-color: #555 transparent transparent transparent;
 }
 
+.myChart {
+  overflow-y: hidden;
+	max-height: 500px; /* approximate max height */
+
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
 .popup .show {
   visibility: visible;
   -webkit-animation: fadeIn 3s;
