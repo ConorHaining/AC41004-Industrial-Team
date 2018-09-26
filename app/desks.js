@@ -33,12 +33,19 @@ module.exports = {
    },
 
    getHistoricalDeskUsage: (hour, cb) => {
-
+     
     const client = new elasticsearch.Client({
         hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
     });
 
-    const hoursInSeconds = (hour * 3600) - 3600;
+    let currentHour = new Date().getHours();
+    let differenceInHours = currentHour - hour;
+
+    if (differenceInHours < 0) {
+        differenceInHours = differenceInHours + 24; 
+    }
+
+    let differenceInSeconds = differenceInHours * 3600;
 
     let occupancy = {};
     
@@ -49,8 +56,8 @@ module.exports = {
             query: {
                 range : {
                     timestamp: {
-                        "gte" : `now/d+${hoursInSeconds}s`,
-                        "lt" :  `now/d+${hoursInSeconds+1}s`
+                        "gte" : `now-${differenceInSeconds}s`,
+                        "lt" :  `now-${differenceInSeconds-10}s`
                     }
                 }
             }
