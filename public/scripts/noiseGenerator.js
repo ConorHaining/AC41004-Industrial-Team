@@ -1,6 +1,7 @@
 let intervalVar;
 let noiseHighlighted = false;
 let graphDisplay = false;
+let labArray = ["3003","3002","3000"];
 
 function getNoiseLevel() {
     let d = new Date(); // for now
@@ -69,7 +70,6 @@ function highlightLabs()
 {
     highlightUpdate("3003");
     highlightUpdate("3002");
-    highlightUpdate("3001");
     highlightUpdate("3000");
     if(!graphDisplay){
         displayChart();
@@ -94,7 +94,7 @@ function setEntityHighlights() {
 }
 
 function clearEntityHighlights() {
-    map.indoors.clearEntityHighlights();
+    map.indoors.clearEntityHighlights(labArray);
     if(intervalVar)
         clearInterval(intervalVar);
 }

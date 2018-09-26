@@ -19,13 +19,13 @@
     <header>
       <img src="/images/SoC.png" alt="">
       <h1>Is the Queen Mother Building Busy?</h1>
-      <button onclick="setEntityHighlights()">Activate noise</button>
-      <button onclick="">Activate tables</button>
+      <button style="visibility:hidden" id="noiseButton" onclick="setEntityHighlights()">Activate noise</button>
+      <button style="visibility:hidden" id="tableButton" onclick="">Activate tables</button>
       <div class="slide">
         <div class="popup">
-          <span class="popuptext show" id="myPopup"></span>
+          <span style="visibility:hidden" class="popuptext show" id="myPopup"></span>
         </div>
-        <input type="range" min="1" max="24" value="8" class="slider" id="hourRange">
+        <input style="visibility:hidden" type="range" min="1" max="24" value="8" class="slider" id="hourRange">
       </div>
     </header>
     <section>
@@ -34,7 +34,7 @@
       <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
         <img src="/images/NoiseGradient.png">
     </div>
-      <div id="graphButton" style="position:absolute; left: 96.5%; top: 12%">
+      <div id="graphButton" style="position:absolute; left: 96.5%; top: 12%; visibility:hidden">
         <i class="fas fa-chart-line fa-3x"></i>
       </div>
       <div><canvas class= "myChart" id="myChart" style= "position: relative;"></canvas></div>

@@ -27,8 +27,6 @@ function getHourFromSliderValue(value, curHour)
     tempHour = curHour - tempHour;
     if (tempHour < 0)
         tempHour = 24 + tempHour;
-    else if (tempHour == 0)
-        tempHour = 24;
     return tempHour;
 }
 
