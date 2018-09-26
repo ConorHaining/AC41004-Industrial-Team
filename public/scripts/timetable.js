@@ -54,6 +54,7 @@ function placeMarkers(event) {
         });
 
     });
+    setEntityHighlights();
     document.getElementById("noiseButton").style.visibility = "visible";
     document.getElementById('tableButton').style.visibility = "visible";
     document.getElementById('hourRange').style.visibility = "visible";

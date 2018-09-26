@@ -77,7 +77,6 @@ function highlightUpdate(labid, hour) {
 
 function highlightLabs(hour)
 {
-    console.log(hour);
     highlightUpdate("3003", hour);
     highlightUpdate("3002", hour);
     highlightUpdate("3000", hour);
@@ -92,7 +91,7 @@ function setEntityHighlights() {
     {
         noiseHighlighted = true;
         highlightLabs(-1);
-        intervalVar = setInterval(function() { highlightLabs(-1); }, 3000);
+        intervalVar = setInterval(function() { highlightLabs(-1); }, 5000);
         document.getElementById('NoiseGradient').style.visibility = "visible";
     }
     else
@@ -101,6 +100,14 @@ function setEntityHighlights() {
         clearEntityHighlights();
         document.getElementById('NoiseGradient').style.visibility = "hidden";
     }
+}
+
+function currentNoiseUpdate()
+{
+    if(intervalVar)
+        clearInterval(intervalVar);
+    highlightLabs(-1);
+    intervalVar = setInterval(function() { highlightLabs(-1); }, 5000);
 }
 
 function clearEntityHighlights() {

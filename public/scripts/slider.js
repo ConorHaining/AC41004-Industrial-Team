@@ -12,6 +12,7 @@ slider.oninput = function() {
     if( this.value == 24 )
     {
         currentDeskUpdate();
+        currentNoiseUpdate();
     }
     else
     {
