@@ -63,11 +63,30 @@ module.exports = {
             }
         }
       }, (err, response) => {
-          response.hits.hits.forEach(element => {
-              occupancy[element._source.pc_name] = element._source.available;
-          });
+            console.log(response);
 
-          cb(occupancy);
+            if (err || response.hits.total === 0){
+                let pclist = [];
+                for(let labNo = 0; labNo < 3; labNo++) {
+                    for(let deskNo = 1; deskNo < 8; deskNo++) {
+                        for(let pcNo = 1; pcNo < 5; pcNo++) {
+                            pclist.push("labpc"+labNo+deskNo+pcNo)
+                        }
+                    }
+                }
+
+                pclist.forEach((pcName) => {
+                    occupancy[pcName] = Math.random() >= 0.5;;
+                });
+
+            } else {
+                response.hits.hits.forEach(element => {
+                    occupancy[element._source.pc_name] = element._source.available;
+                });
+      
+            }
+            
+            cb(occupancy);
       });
     
 }
