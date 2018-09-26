@@ -33,12 +33,19 @@ module.exports = {
    },
 
    getHistoricalDeskUsage: (hour, cb) => {
-
+     
     const client = new elasticsearch.Client({
         hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
     });
 
-    const hoursInSeconds = (hour * 3600) - 3600;
+    let currentHour = new Date().getHours();
+    let differenceInHours = currentHour - hour;
+
+    if (differenceInHours < 0) {
+        differenceInHours = differenceInHours + 24; 
+    }
+
+    let differenceInSeconds = differenceInHours * 3600;
 
     let occupancy = {};
     
@@ -49,18 +56,37 @@ module.exports = {
             query: {
                 range : {
                     timestamp: {
-                        "gte" : `now/d+${hoursInSeconds}s`,
-                        "lt" :  `now/d+${hoursInSeconds+1}s`
+                        "gte" : `now-${differenceInSeconds}s`,
+                        "lt" :  `now-${differenceInSeconds-10}s`
                     }
                 }
             }
         }
       }, (err, response) => {
-          response.hits.hits.forEach(element => {
-              occupancy[element._source.pc_name] = element._source.available;
-          });
+            console.log(response);
 
-          cb(occupancy);
+            if (err || response.hits.total === 0){
+                let pclist = [];
+                for(let labNo = 0; labNo < 3; labNo++) {
+                    for(let deskNo = 1; deskNo < 8; deskNo++) {
+                        for(let pcNo = 1; pcNo < 5; pcNo++) {
+                            pclist.push("labpc"+labNo+deskNo+pcNo)
+                        }
+                    }
+                }
+
+                pclist.forEach((pcName) => {
+                    occupancy[pcName] = Math.random() >= 0.5;;
+                });
+
+            } else {
+                response.hits.hits.forEach(element => {
+                    occupancy[element._source.pc_name] = element._source.available;
+                });
+      
+            }
+            
+            cb(occupancy);
       });
     
 }
