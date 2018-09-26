@@ -14,9 +14,9 @@ function deskHighlighting() {
     
             deskIds.forEach((desk, index) => {
                 if(availability[index]) {
-                    offDesks.push(desk);
-                } else {
                     onDesks.push(desk);
+                } else {
+                    offDesks.push(desk);
                 }
             });
     
