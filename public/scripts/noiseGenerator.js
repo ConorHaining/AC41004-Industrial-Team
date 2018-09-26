@@ -3,13 +3,22 @@ let noiseHighlighted = false;
 let graphDisplay = false;
 let labArray = ["3003","3002","3000"];
 
-function getNoiseLevel() {
-    let d = new Date(); // for now
+function getNoiseLevel(hour) {
+    let curHour;
+    if (hour == -1)
+    {
+        let d = new Date(); // for now
+        curHour = d.getHours();
+    }
+    else 
+    {
+        curHour = hour;
+    }
     let utilizationArray = [1, 1, 1, 1, 1, 1,
                             1.1, 1.2, 1.4, 1.5, 1.7, 1.7,
                             1.4, 1.5, 1.5, 1.5, 1.5, 1.35,
                             1.15, 1.1, 1, 1, 1, 1];
-    let curHour = d.getHours();
+    
     if (curHour == 0)
         curHour = 23;
     else
@@ -36,8 +45,8 @@ function getNoiseLevel() {
         return ambientNoiseDB;
 }
 
-function highlightUpdate(labid) {
-    let roomDB = getNoiseLevel();
+function highlightUpdate(labid, hour) {
+    let roomDB = getNoiseLevel(hour);
     let highestDB = 75;
     let baseDB = 40;
 
@@ -66,11 +75,12 @@ function highlightUpdate(labid) {
     }
 }
 
-function highlightLabs()
+function highlightLabs(hour)
 {
-    highlightUpdate("3003");
-    highlightUpdate("3002");
-    highlightUpdate("3000");
+    console.log(hour);
+    highlightUpdate("3003", hour);
+    highlightUpdate("3002", hour);
+    highlightUpdate("3000", hour);
     if(!graphDisplay){
         displayChart();
         graphDisplay = true;
@@ -81,8 +91,8 @@ function setEntityHighlights() {
     if ( noiseHighlighted == false )
     {
         noiseHighlighted = true;
-        highlightLabs();
-        intervalVar = setInterval(highlightLabs, 10000);
+        highlightLabs(-1);
+        intervalVar = setInterval(function() { highlightLabs(-1); }, 3000);
         document.getElementById('NoiseGradient').style.visibility = "visible";
     }
     else

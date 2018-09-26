@@ -15,9 +15,12 @@ slider.oninput = function() {
     }
     else
     {
+        let hour = getHourFromSliderValue(this.value, 
+            curDate.getHours());
         map.indoors.clearEntityHighlights();
-        deskHighlightingHour(getHourFromSliderValue(this.value, 
-            curDate.getHours()));
+        clearEntityHighlights();
+        deskHighlightingHour(hour);
+        highlightLabs(hour);
     }
 }
 

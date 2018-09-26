@@ -6,13 +6,21 @@ client = new elasticsearch.Client({
     hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
 });
 
-function getNoiseLevel() {
-    let d = new Date(); // for now
+function getNoiseLevel(hour) {
+    let curHour;
+    if (hour == -1)
+    {
+        let d = new Date(); // for now
+        curHour = d.getHours();
+    }
+    else 
+    {
+        curHour = hour;
+    }
     let utilizationArray = [1, 1, 1, 1, 1, 1,
                             1.1, 1.2, 1.4, 1.5, 1.7, 1.7,
                             1.4, 1.5, 1.5, 1.5, 1.5, 1.35,
                             1.15, 1.1, 1, 1, 1, 1];
-    let curHour = d.getHours();
     if (curHour == 0)
         curHour = 23;
     else
@@ -44,7 +52,7 @@ setInterval(() => {
         let body = {
             "timestamp": Date.now(),
             "lab_no": labname,
-            "volume": parseFloat(getNoiseLevel()).toPrecision(3)
+            "volume": parseFloat(getNoiseLevel(-1)).toPrecision(3)
         };
 
         client.index({
