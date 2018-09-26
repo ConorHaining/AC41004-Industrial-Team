@@ -32,13 +32,13 @@ function placeMarkers(event) {
     const buildingName = event.indoorMap.getIndoorMapId();
     console.log(buildingName);
 
-    locations.forEach((location) => {
-
-        $.get({
-            url: 'timetable/GroundFloorLabs/today',
-            dataType: 'html',
-            success: (data) => {
-                
+    
+    $.get({
+        url: 'timetable/GroundFloorLabs/today',
+        dataType: 'html',
+        success: (data) => {
+            
+            locations.forEach((location) => {
                 L.marker(location.LatLong, {        
                     title: location.Title,
                     indoorMapId: location.IndoorMapId,
@@ -50,9 +50,8 @@ function placeMarkers(event) {
                             maxWidth: 600,
                         });
 
-            } 
-        });
-
+            });
+        } 
     });
     setEntityHighlights();
     document.getElementById("noiseButton").style.visibility = "visible";
