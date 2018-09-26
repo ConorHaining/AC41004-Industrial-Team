@@ -1,5 +1,8 @@
 var e = document.getElementById("graphButton");
 var c = document.getElementById("myChart");
+var m = document.getElementById("map");
+var n = document.getElementById("NoiseGradient");
+
 var isElementClicked = false;
 var moveChart = false;
 
@@ -18,19 +21,16 @@ function animate() {
     }
 }
 
-e.onclick = function () {
-    moveChart = !moveChart
-    if(!isElementClicked){
-    //animate();
+e.onmouseover = function () {
     c.style.visibility = "visible";
-    //console.log(c);
-    isElementClicked = true;
-    } else {
-        //animate();
-        c.style.visibility = "hidden";
-        isElementClicked = false;
-    }
-   // console.log(moveChart);
+    m.style.visibility = "hidden";
+    n.style.visibility = "hidden";
+}
+
+e.onmouseout = function () {
+    c.style.visibility = "hidden";
+    m.style.visibility = "visible";
+    n.style.visibility = "visible";
 }
 
 

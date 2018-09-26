@@ -19,8 +19,11 @@
     <header>
       <img src="/images/SoC.png" alt="">
       <h1>Is the Queen Mother Building Busy?</h1>
-      <button style="visibility:hidden" id="noiseButton" onclick="setEntityHighlights()">Activate noise</button>
-      <button style="visibility:hidden" id="tableButton" onclick="">Activate tables</button>
+      <button onclick="setEntityHighlights()">Activate noise</button>
+      <button onclick="">Activate tables</button>
+      <div id="graphButton" style="position:absolute; left: 96.5%">
+        <i class="fas fa-chart-line fa-3x"></i>
+      </div>
       <div class="slide">
         <div class="popup">
           <span style="visibility:hidden" class="popuptext show" id="myPopup"></span>
@@ -29,7 +32,9 @@
       </div>
     </header>
     <section>
-      <div id="widget-container" class="wrld-widget-container"></div>
+      <div id="widget-container" class="wrld-widget-container">
+        <div style= "position: relative; top: 3%"><canvas class= "myChart" id="myChart"></canvas></div>
+      </div>
       <div id="map" style="min-height: 800px;"></div>
       <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
         <img src="/images/NoiseGradient.png">

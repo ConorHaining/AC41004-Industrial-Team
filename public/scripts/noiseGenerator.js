@@ -104,10 +104,10 @@ var massPopChart;
 function displayChart(){
     document.getElementById('myChart').style.visibility = "hidden";
     massPopChart = new Chart(myChart, {
-        type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+        type:'line', 
         data:{
         datasets:[{
-                label:'Ronberter Level',
+                label:'Noise level in the labs',
                 data:[],
                 fill: false,
                 borderColor: 'red',
@@ -116,10 +116,6 @@ function displayChart(){
         },
         options: {
         responsive: true,
-        title:      {
-            display: true,
-            text:    "Chart.js Time Scale"
-        },
         scales:     {
             xAxes: [{
                 type:       "time",
