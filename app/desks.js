@@ -5,24 +5,33 @@ module.exports = {
 
        const client = new elasticsearch.Client({
            hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
-       });
+        });
+        
+        let occupancy = {};
+        const currentHour = new Date().getHours();
+        const currentMinute = new Date().getMinutes();
+        const currentSecond = new Date().getSeconds();
 
-       let occupancy = {};
        
        client.search({
            index: 'pc_logs',
            body: {
-               size: 100,
+               size: 250,
                query: {
-                   range : {
-                       timestamp: {
-                           gte : "now-5s",
-                           lt :  "now"
-                       }
-                   }
-               }
+                range : {
+                    timestamp: {
+                        gte: `2018-09-25 ${currentHour}:${currentMinute}:${currentSecond - 2}`,
+                        lte: `2018-09-25 ${currentHour}:${currentMinute}:${currentSecond}`,
+                        format: "yyyy-MM-dd HH:mm:ss"
+                    }
+                }
+            }
            }
          }, (err, response) => {
+             if(err || response.hits.hits === 0){
+                 cb({});
+             }
+             
              response.hits.hits.forEach(element => {
                  occupancy[element._source.pc_name] = element._source.available;
              });
@@ -38,14 +47,18 @@ module.exports = {
         hosts: ['https://elastic:VToECC5TLZoafrR83FfRSC3A@0196297975c7432f95b7a548aa467123.eu-west-1.aws.found.io:9243/']
     });
 
-    let currentHour = new Date().getHours();
+    const currentHour = new Date().getHours();
+    const currentMinute = new Date().getMinutes();
+    const currentSecond = new Date().getSeconds();
+    let dayToUse = 25;
     let differenceInHours = currentHour - hour;
 
     if (differenceInHours < 0) {
-        differenceInHours = differenceInHours + 24; 
+        // differenceInHours = differenceInHours + 24;
+        dayToUse--;
     }
 
-    let differenceInSeconds = differenceInHours * 3600;
+    // let differenceInSeconds = differenceInHours * 3600;
 
     let occupancy = {};
     
@@ -56,8 +69,9 @@ module.exports = {
             query: {
                 range : {
                     timestamp: {
-                        "gte" : `now-${differenceInSeconds}s`,
-                        "lt" :  `now-${differenceInSeconds-10}s`
+                        gte: `2018-09-${dayToUse} ${currentHour}:${currentMinute}:${currentSecond - 2}`,
+                        lte: `2018-09-${dayToUse} ${currentHour}:${currentMinute}:${currentSecond}`,
+                        format: "yyyy-MM-dd HH:mm:ss"
                     }
                 }
             }
