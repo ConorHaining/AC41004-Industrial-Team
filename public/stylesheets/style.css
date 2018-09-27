@@ -16,6 +16,10 @@ header{
   color: white;
 }
 
+.graphBtn:hover {
+  opacity: 0.6;
+}
+
 header img,
 header h1{
   display: inline;

@@ -7,6 +7,7 @@ var isElementClicked = false;
 var moveChart = false;
 
 function animate() {
+    alert("Hi Dombro, how are you?");
     var pos = 0;
     var id = setInterval(frame, 5);
     function frame() {
