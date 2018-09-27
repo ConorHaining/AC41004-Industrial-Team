@@ -5,10 +5,11 @@ displaySliderTime(tempDate);
 //output.innerHTML = slider.value;
 
 // Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
+slider.onchange = function() {
     //output.innerHTML = this.value;
     let curDate = new Date();
     displaySliderTime(curDate);
+    console.log('value: ' + slider.value);
     if( this.value == 24 )
     {
         currentDeskUpdate();
@@ -16,10 +17,7 @@ slider.oninput = function() {
     }
     else
     {
-        let hour = getHourFromSliderValue(this.value, 
-            curDate.getHours());
-        map.indoors.clearEntityHighlights();
-        clearEntityHighlights();
+        let hour = getHourFromSliderValue(this.value, curDate.getHours());
         deskHighlightingHour(hour);
         highlightLabs(hour);
     }
