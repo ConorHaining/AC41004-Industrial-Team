@@ -28,6 +28,10 @@ module.exports = {
             }
            }
          }, (err, response) => {
+             if(err || response.hits.hits === 0){
+                 cb({});
+             }
+             
              response.hits.hits.forEach(element => {
                  occupancy[element._source.pc_name] = element._source.available;
              });
