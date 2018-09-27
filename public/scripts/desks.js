@@ -57,11 +57,8 @@ function deskHighlightingHour(hour) {
 
 function currentDeskUpdate()
 {
-    if(deskPolling)
-        clearInterval(deskPolling);
-    deskPolling = window.setInterval(deskHighlighting, 5000);
     deskHighlighting();
+    deskPolling = window.setInterval(deskHighlighting, 5000);
 }
 
-let deskPolling = window.setInterval(deskHighlighting, 5000);
-deskHighlighting();
+currentDeskUpdate();
