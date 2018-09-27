@@ -1,12 +1,24 @@
 let intervalVar;
 let noiseHighlighted = false;
-function getNoiseLevel() {
-    let d = new Date(); // for now
+let graphDisplay = false;
+let labArray = ["3003","3002","3000"];
+
+function getNoiseLevel(hour) {
+    let curHour;
+    if (hour == -1)
+    {
+        let d = new Date(); // for now
+        curHour = d.getHours();
+    }
+    else 
+    {
+        curHour = hour;
+    }
     let utilizationArray = [1, 1, 1, 1, 1, 1,
                             1.1, 1.2, 1.4, 1.5, 1.7, 1.7,
                             1.4, 1.5, 1.5, 1.5, 1.5, 1.35,
                             1.15, 1.1, 1, 1, 1, 1];
-    let curHour = d.getHours();
+    
     if (curHour == 0)
         curHour = 23;
     else
@@ -33,8 +45,8 @@ function getNoiseLevel() {
         return ambientNoiseDB;
 }
 
-function highlightUpdate(labid) {
-    let roomDB = getNoiseLevel();
+function highlightUpdate(labid, hour) {
+    let roomDB = getNoiseLevel(hour);
     let highestDB = 75;
     let baseDB = 40;
 
@@ -56,27 +68,30 @@ function highlightUpdate(labid) {
     
     map.indoors.setEntityHighlights(labid, [redRGB, 0, blueRGB, 64]);
     
-    massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
-    massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
-    massPopChart.update();
-            
-    console.log(massPopChart.config.data.datasets[0]);
+    if(massPopChart != undefined) {
+        massPopChart.config.data.datasets[0].data.push({x: +new Date, y: roomDB});
+        massPopChart.config.data.datasets[0].borderColor = ("rgba(" + parseFloat(redRGB).toPrecision(3) + " , 0," + parseFloat(blueRGB).toPrecision(3) + " , 64)");
+        massPopChart.update();
+    }
 }
 
-function highlightLabs()
+function highlightLabs(hour)
 {
-    highlightUpdate("3003");
-    highlightUpdate("3002");
-    highlightUpdate("3001");
-    highlightUpdate("3000");
+    highlightUpdate("3003", hour);
+    highlightUpdate("3002", hour);
+    highlightUpdate("3000", hour);
+    if(!graphDisplay){
+        displayChart();
+        graphDisplay = true;
+    }
 }
 
 function setEntityHighlights() {
     if ( noiseHighlighted == false )
     {
         noiseHighlighted = true;
-        highlightLabs();
-        intervalVar = setInterval(highlightLabs, 10000);
+        highlightLabs(-1);
+        intervalVar = setInterval(function() { highlightLabs(-1); }, 5000);
         document.getElementById('NoiseGradient').style.visibility = "visible";
     }
     else
@@ -87,53 +102,60 @@ function setEntityHighlights() {
     }
 }
 
+function currentNoiseUpdate()
+{
+    if(intervalVar)
+        clearInterval(intervalVar);
+    highlightLabs(-1);
+    intervalVar = setInterval(function() { highlightLabs(-1); }, 5000);
+}
+
 function clearEntityHighlights() {
-    map.indoors.clearEntityHighlights();
+    map.indoors.clearEntityHighlights(labArray);
     if(intervalVar)
         clearInterval(intervalVar);
 }
 var timeFormat = 'DD/MM/YYYY';
 let myChart = document.getElementById('myChart').getContext('2d');
-
-let massPopChart = new Chart(myChart, {
-    type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-    data:{
-    datasets:[{
-            label:'Ronberter Level',
-            data:[],
-            fill: false,
-            borderColor: 'red',
-            }
-            ]
-    },
-    options: {
-    responsive: true,
-    title:      {
-        display: true,
-        text:    "Chart.js Time Scale"
-    },
-    scales:     {
-        xAxes: [{
-            type:       "time",
-            time:       {
-                format: timeFormat,
-                tooltipFormat: 'll'
-            },
-            scaleLabel: {
-                display:     true,
-                labelString: 'Date'
-            }
-        }],
-        yAxes: [{
-            scaleLabel: {
-                display:     true,
-                labelString: 'value'
-            },
-                ticks: {
-                    min: 40,
-                    max: 80
+var massPopChart;
+function displayChart(){
+    document.getElementById('myChart').style.visibility = "hidden";
+    massPopChart = new Chart(myChart, {
+        type:'line', 
+        data:{
+        datasets:[{
+                label:'Noise level in the labs',
+                data:[],
+                fill: false,
+                borderColor: 'red',
                 }
-        }]
+                ]
+        },
+        options: {
+        responsive: true,
+        scales:     {
+            xAxes: [{
+                type:       "time",
+                time:       {
+                    format: timeFormat,
+                    tooltipFormat: 'll'
+                },
+                scaleLabel: {
+                    display:     true,
+                    labelString: 'Date'
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display:     true,
+                    labelString: 'value'
+                },
+                    ticks: {
+                        min: 40,
+                        max: 80
+                    }
+            }]
+        }
     }
+    });
 }
-});

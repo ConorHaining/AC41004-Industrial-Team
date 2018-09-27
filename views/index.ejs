@@ -10,27 +10,45 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script src="https://cdn-webgl.wrld3d.com/wrldjs/addons/indoor_control/latest/indoor_control.js"></script>
-
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <header>
       <img src="/images/SoC.png" alt="">
       <h1>Is the Queen Mother Building Busy?</h1>
-      <button onclick="setEntityHighlights()">Activate noise</button>
-      <button onclick="">Activate tables</button>
+      <button id="noiseButton" style="visibility: hidden" onclick="setEntityHighlights()">Activate noise</button>
+      <button id="tableButton" style="visibility: hidden" onclick="">Activate tables</button>
+      <div id="graphButton" class="graphBtn" style="position:absolute; left: 96.5%; visibility: hidden">
+        <i class="fas fa-chart-line fa-3x"></i>
+      </div>
+      <div class="slide">
+        <div class="popup">
+          <span style="visibility:hidden" class="popuptext show" id="myPopup"></span>
+        </div>
+        <input style="visibility:hidden" type="range" min="1" max="24" value="8" class="slider" id="hourRange">
+      </div>
     </header>
     <section>
-      <div id="widget-container" class="wrld-widget-container"></div>
+      <div id="widget-container" class="wrld-widget-container">
+        <div style= "position: relative; top: 3%"><canvas class= "myChart" id="myChart"></canvas></div>
+      </div>
       <div id="map" style="min-height: 800px;"></div>
+      <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
+        <img src="/images/NoiseGradient.png">
+    </div>
+      <div id="graphButton" style="position:absolute; left: 96.5%; top: 12%; visibility:hidden">
+        <i class="fas fa-chart-line fa-3x"></i>
+      </div>
+      <div><canvas class= "myChart w3-animate-right" id="myChart" style= "position: relative;"></canvas></div>
     </section>
-    <div><canvas id="myChart"></canvas></div>
     <script src="/scripts/map.js"></script>
     <script src="/scripts/timetable.js"></script>
     <script src="/scripts/desks.js"></script>
     <script src="/scripts/noiseGenerator.js"></script>
-    <div id="NoiseGradient" style="position:absolute; visibility:hidden; left: 95%; top: 40%">
-        <img src="/images/NoiseGradient.png">
-    </div>
+    <script src="/scripts/slider.js"></script>
+    <script src="/scripts/graphDisplay.js"></script>
   </body>
 </html>

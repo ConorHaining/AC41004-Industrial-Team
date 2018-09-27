@@ -20,12 +20,45 @@ function deskHighlighting() {
                 }
             });
     
-            map.indoors.setEntityHighlights(onDesks, red);
-            map.indoors.setEntityHighlights(offDesks, green);
+            map.indoors.setEntityHighlights(onDesks, green);
+            map.indoors.setEntityHighlights(offDesks, red);
     
         } 
     });
 }
 
-let deskPolling = window.setInterval(deskHighlighting, 5000);
-deskHighlighting();
+function deskHighlightingHour(hour) {
+    if(deskPolling)
+        clearInterval(deskPolling);
+    $.get({
+        url: '/desks/' + hour.toString(),
+        dataType: 'json',
+        success: (desks) => {
+            let deskIds = Object.keys(desks);
+            let availability = Object.values(desks);
+    
+            let onDesks = [];
+            let offDesks = [];
+    
+            deskIds.forEach((desk, index) => {
+                if(availability[index]) {
+                    offDesks.push(desk);
+                } else {
+                    onDesks.push(desk);
+                }
+            });
+    
+            map.indoors.setEntityHighlights(onDesks, green);
+            map.indoors.setEntityHighlights(offDesks, red);
+    
+        } 
+    });
+}
+
+function currentDeskUpdate()
+{
+    deskHighlighting();
+    deskPolling = window.setInterval(deskHighlighting, 5000);
+}
+
+currentDeskUpdate();
