@@ -18,6 +18,7 @@ slider.onchange = function() {
     else
     {
         let hour = getHourFromSliderValue(this.value, curDate.getHours());
+        clearEntityHighlights();
         deskHighlightingHour(hour);
         highlightLabs(hour);
     }
@@ -61,4 +62,4 @@ function updateSliderTime()
     }
 }
 
-//let sliderUpdate = window.setInterval(updateSliderTime, 5000);
+// let sliderUpdate = window.setInterval(updateSliderTime, 5000);
