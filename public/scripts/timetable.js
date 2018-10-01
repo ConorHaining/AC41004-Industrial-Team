@@ -54,8 +54,6 @@ function placeMarkers(event) {
         } 
     });
     setEntityHighlights();
-    document.getElementById("noiseButton").style.visibility = "visible";
-    document.getElementById('tableButton').style.visibility = "visible";
     document.getElementById('hourRange').style.visibility = "visible";
     document.getElementById('graphButton').style.visibility = "visible";
     document.getElementById('myPopup').style.visibility = "visible";
@@ -64,8 +62,6 @@ function placeMarkers(event) {
 function onIndoorMapExited() 
 {
     document.getElementById('NoiseGradient').style.visibility = "hidden";
-    document.getElementById('noiseButton').style.visibility = "hidden";
-    document.getElementById('tableButton').style.visibility = "hidden";
     document.getElementById('hourRange').style.visibility = "hidden";
     document.getElementById('graphButton').style.visibility = "hidden";
     document.getElementById('myPopup').style.visibility = "hidden";
